@@ -139,6 +139,8 @@ module ariane #(
   logic                     no_st_pending_ex;
   logic                     no_st_pending_commit;
   logic                     amo_valid_commit;
+  logic [TRANS_ID_BITS-1:0] commit_trans_id_commit_ex;
+  logic                     commit_ld_valid_commit_ex;
   // --------------
   // ID <-> COMMIT
   // --------------
@@ -396,6 +398,8 @@ module ariane #(
     .fpu_result_o           ( fpu_result_ex_id            ),
     .fpu_valid_o            ( fpu_valid_ex_id             ),
     .fpu_exception_o        ( fpu_exception_ex_id         ),
+    .commit_trans_id_i      ( commit_trans_id_commit_ex   ),
+    .commit_ld_valid_i      ( commit_ld_valid_commit_ex   ),
     .amo_valid_commit_i     ( amo_valid_commit            ),
     .amo_req_o              ( amo_req                     ),
     .amo_resp_i             ( amo_resp                    ),
@@ -446,6 +450,8 @@ module ariane #(
     .commit_lsu_ready_i     ( lsu_commit_ready_ex_commit    ),
     .amo_valid_commit_o     ( amo_valid_commit              ),
     .amo_resp_i             ( amo_resp                      ),
+    .commit_trans_id_o      ( commit_trans_id_commit_ex     ),
+    .commit_ld_valid_o      ( commit_ld_valid_commit_ex     ),
     .commit_csr_o           ( csr_commit_commit_ex          ),
     .pc_o                   ( pc_commit                     ),
     .csr_op_o               ( csr_op_commit_csr             ),

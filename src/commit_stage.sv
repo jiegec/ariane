@@ -45,6 +45,8 @@ module commit_stage #(
     // commit signals to ex
     output logic                                    commit_lsu_o,       // commit the pending store
     input  logic                                    commit_lsu_ready_i, // commit buffer of LSU is ready
+    output logic [TRANS_ID_BITS-1:0]                commit_trans_id_o,  // commit load (only non-speculative loads)
+    output logic                                    commit_ld_valid_o,  // commit load (only non-speculative loads)
     output logic                                    amo_valid_commit_o, // valid AMO in commit stage
     input  logic                                    no_st_pending_i,    // there is no store pending
     output logic                                    commit_csr_o,       // commit the pending CSR instruction
@@ -104,7 +106,10 @@ module commit_stage #(
         sfence_vma_o       = 1'b0;
         csr_write_fflags_o = 1'b0;
         flush_commit_o  = 1'b0;
-
+        // helper signals for non-speculative loads. The load unit will wait until the
+        // the ROB points to the load which is waiting.
+        commit_trans_id_o = commit_instr_i[0].trans_id;
+        commit_ld_valid_o = commit_instr_i[0].fu == LOAD;
         // we will not commit the instruction if we took an exception
         // and we do not commit the instruction if we requested a halt
         // furthermore if the debugger is requesting to debug do not commit this instruction if we are not yet in debug mode

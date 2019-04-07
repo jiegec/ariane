@@ -32,15 +32,15 @@ package ariane_pkg;
     // within Ariane add a field here and assign a default value to the config. Please make
     // sure to add a propper parameter check to the `check_cfg` function.
     typedef struct packed {
-      int                     NrNonIdempotentRules;  // Number of non idempotent rules
-      logic [2**16-1:0][63:0] NonIdempotentAddrBase; // base which needs to match
-      logic [2**16-1:0][63:0] NonIdempotentAddrMaks; // bit mask which bits to consider when matching the rule
+      int                NrNonIdempotentRules;  // Number of non idempotent rules
+      logic [15:0][63:0] NonIdempotentAddrBase; // base which needs to match
+      logic [15:0][63:0] NonIdempotentAddrMaks; // bit mask which bits to consider when matching the rule
     } ariane_cfg_t;
 
     localparam ariane_cfg_t ArianeDefaultConfig = '{
-      NrNonIdempotentRules: 2,
-      NonIdempotentAddrBase: {64'b0, 64'b0},
-      NonIdempotentAddrMaks: {64'b0, 64'b0}
+      NrNonIdempotentRules: 1,
+      NonIdempotentAddrBase: {64'b0},
+      NonIdempotentAddrMaks: {1 << 31}
     };
 
     // Function being called to check parameters
