@@ -251,7 +251,6 @@ module commit_stage #(
     // -----------------------------
     // Exception & Interrupt Logic
     // -----------------------------
-    // TODO(zarubaf): Move interrupt handling to commit stage.
     // here we know for sure that we are taking the exception
     always_comb begin : exception_handling
         // Multiple simultaneous interrupts and traps at the same privilege level are handled in the following decreasing
@@ -260,44 +259,25 @@ module commit_stage #(
         exception_o.valid = 1'b0;
         exception_o.cause = 64'b0;
         exception_o.tval  = 64'b0;
-        // we need a valid instruction in the commit stage, otherwise we might loose the PC in case of interrupts as they
-        // can happen anywhere in the execution flow and might just happen between two legal instructions - the PC would then
-        // be outdated. The solution here is to defer any exception/interrupt until we get a valid PC again (from where we cane
-        // resume execution afterwards).
+        // we need a valid instruction in the commit stage
         if (commit_instr_i[0].valid) begin
             // ------------------------
             // check for CSR exception
             // ------------------------
-            if (csr_exception_i.valid && !csr_exception_i.cause[63]) begin
+            if (csr_exception_i.valid) begin
                 exception_o      = csr_exception_i;
                 // if no earlier exception happened the commit instruction will still contain
-                // the instruction data from the ID stage. If a earlier exception happened we don't care
+                // the instruction bits from the ID stage. If a earlier exception happened we don't care
                 // as we will overwrite it anyway in the next IF bl
                 exception_o.tval = commit_instr_i[0].ex.tval;
             end
             // ------------------------
             // Earlier Exceptions
             // ------------------------
-            // but we give precedence to exceptions which happened earlier
+            // but we give precedence to exceptions which happened earlier e.g.: instruction page
+            // faults for example
             if (commit_instr_i[0].ex.valid) begin
                 exception_o = commit_instr_i[0].ex;
-            end
-            // ------------------------
-            // Interrupts
-            // ------------------------
-            // check for CSR interrupts (e.g.: normal interrupts which get triggered here)
-            // by putting interrupts here we give them precedence over any other exception
-            // Don't take the interrupt if we are committing an AMO or a CSR.
-            // - Atomics because they are atomic in their nature and should not be interrupted
-            // - CSRs because it makes the implementation easier as CSRs are figured out at the same
-            //   time as interrupts (here in the commit stage). By not allowing them on CSRs we
-            //   reduce the potential critical path length. As all CSRs are single-cycle (plus a
-            //   potential pipeline flush) this only impacts interrupt latency in a couple of cycles.
-            if (csr_exception_i.valid && csr_exception_i.cause[63]
-                                      && !amo_valid_commit_o
-                                      && commit_instr_i[0].fu != CSR) begin
-                exception_o = csr_exception_i;
-                exception_o.tval = commit_instr_i[0].ex.tval;
             end
         end
         // Don't take any exceptions iff:
