@@ -314,7 +314,7 @@ module load_unit #(
       assign addr_match[i] = (Cfg.NonIdempotentAddrBase[i] & Cfg.NonIdempotentAddrMaks[i])
                                   == (paddr_i & Cfg.NonIdempotentAddrMaks[i]);
     end
-    assign is_non_idempotent = !addr_match;
+    assign is_non_idempotent = addr_match;
 
     // latch physical address for the tag cycle (one cycle after applying the index)
     always_ff @(posedge clk_i or negedge rst_ni) begin
