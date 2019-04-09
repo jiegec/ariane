@@ -873,8 +873,8 @@ module csr_regfile #(
         // check if we are in vectored mode, if yes then do BASE + 4 * cause
         // we are imposing an additional alignment-constraint of 64 * 4 bytes since
         // we want to spare the costly addition
-        if ((mtvec_q[0] || stvec_q[0]) && csr_exception_o.cause[63]) begin
-            trap_vector_base_o[7:2] = csr_exception_o.cause[5:0];
+        if ((mtvec_q[0] || stvec_q[0]) && ex_i.cause[63]) begin
+            trap_vector_base_o[7:2] = ex_i.cause[5:0];
         end
 
         epc_o = mepc_q;
