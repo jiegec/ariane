@@ -1125,17 +1125,17 @@ module decoder (
             end
 
             if (interrupt_cause[63] && irq_ctrl_i.global_enable) begin
-                // we can set the cause here
-                instruction_o.ex.cause = interrupt_cause;
                 // However, if bit i in mideleg is set, interrupts are considered to be globally enabled if the hart’s current privilege
                 // mode equals the delegated privilege mode (S or U) and that mode’s interrupt enable bit
                 // (SIE or UIE in mstatus) is set, or if the current privilege mode is less than the delegated privilege mode.
                 if (irq_ctrl_i.mideleg[interrupt_cause[5:0]]) begin
                     if ((irq_ctrl_i.sie && priv_lvl_i == riscv::PRIV_LVL_S) || priv_lvl_i == riscv::PRIV_LVL_U) begin
                         instruction_o.ex.valid = 1'b1;
+                        instruction_o.ex.cause = interrupt_cause;
                     end
                 end else begin
                     instruction_o.ex.valid = 1'b1;
+                    instruction_o.ex.cause = interrupt_cause;
                 end
             end
         end
