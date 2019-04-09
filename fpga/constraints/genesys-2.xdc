@@ -124,4 +124,4 @@ set_max_delay -from [get_ports { trst_n } ] 20
 
 # reset signal
 set_false_path -from [get_ports { trst_n } ]
-set_false_path -from [get_pins i_ddr/u_xlnx_mig_7_ddr3_mig/u_ddr3_infrastructure/rstdiv0_sync_r1_reg_rep/C]
+# set_false_path -from [get_pins i_ddr/u_xlnx_mig_7_ddr3_mig/u_ddr3_infrastructure/rstdiv0_sync_r1_reg_rep/C]

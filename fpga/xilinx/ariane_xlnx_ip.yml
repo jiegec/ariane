@@ -60,15 +60,6 @@ xlnx_ila:
     c_data_depth: 16384
     c_input_pipe_stages: 1
 
-xlnx_mig_7_ddr3:
-  ip: mig_7series
-  vendor: xilinx.com
-  config:
-    xml_input_file: mig_a.prj
-    reset_board_interface: Custom
-    mig_dont_touch_param: Custom
-    board_mig_param: Custom
-
 xlnx_ila:
   ip: xlnx_ila
   vendor: xilinx.com
