@@ -716,7 +716,7 @@ fan_ctrl i_fan_ctrl (
     .fan_pwm_o     ( fan_pwm    )
 );
 
-xlnx_interconnect smc (
+xlnx_axi_interconnect smc (
     .INTERCONNECT_ACLK(ddr_clock_out),
     .INTERCONNECT_ARESETN(ddr_sync_reset),
     .S00_AXI_ACLK(ddr_clock_out),
