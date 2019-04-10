@@ -697,7 +697,8 @@ xlnx_processing_system7 i_ps7 (
     .MIO(FIXED_IO_mio),
     .PS_CLK(FIXED_IO_ps_clk),
     .PS_PORB(FIXED_IO_ps_porb),
-    .PS_SRSTB(FIXED_IO_ps_srstb)
+    .PS_SRSTB(FIXED_IO_ps_srstb),
+    .FCLK_CLK0(ddr_clock_out)
 );
 
 // xlnx_mig_7_ddr3 i_ddr (

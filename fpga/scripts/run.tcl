@@ -17,7 +17,7 @@
 # hard-coded to Genesys 2 for the moment
 add_files -fileset constrs_1 -norecurse constraints/genesys-2.xdc
 
-# read_ip xilinx/xlnx_mig_7_ddr3/ip/xlnx_mig_7_ddr3.xci
+read_ip xilinx/xlnx_processing_system7/ip/xlnx_processing_system7.xci
 read_ip xilinx/xlnx_axi_clock_converter/ip/xlnx_axi_clock_converter.xci
 read_ip xilinx/xlnx_axi_dwidth_converter/ip/xlnx_axi_dwidth_converter.xci
 read_ip xilinx/xlnx_axi_gpio/ip/xlnx_axi_gpio.xci
