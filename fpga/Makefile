@@ -11,7 +11,7 @@ ips := xlnx_axi_clock_converter.xci  \
        xlnx_axi_gpio.xci             \
        xlnx_clk_gen.xci              \
        xlnx_processing_system7.xci   \
-       xlnx_axi_smartconnect.xci
+       xlnx_axi_interconnect.xci
 
 ips := $(addprefix $(work-dir)/, $(ips))
 ips-target := $(join $(addsuffix /ip/, $(addprefix $(ip-dir)/, $(basename $(ips)))), $(ips))

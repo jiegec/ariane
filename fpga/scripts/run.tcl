@@ -18,7 +18,7 @@
 add_files -fileset constrs_1 -norecurse constraints/genesys-2.xdc
 
 read_ip xilinx/xlnx_processing_system7/ip/xlnx_processing_system7.xci
-read_ip xilinx/xlnx_smartconnect/ip/xlnx_smartconnect.xci
+read_ip xilinx/xlnx_interconnect/ip/xlnx_interconnect.xci
 read_ip xilinx/xlnx_axi_clock_converter/ip/xlnx_axi_clock_converter.xci
 read_ip xilinx/xlnx_axi_dwidth_converter/ip/xlnx_axi_dwidth_converter.xci
 read_ip xilinx/xlnx_axi_gpio/ip/xlnx_axi_gpio.xci

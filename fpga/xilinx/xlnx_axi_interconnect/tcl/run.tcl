@@ -1,15 +1,12 @@
 set partNumber $::env(XILINX_PART)
 set boardName  $::env(XILINX_BOARD)
 
-set ipName xlnx_axi_smartconnect
+set ipName xlnx_axi_interconnect
 
 create_project $ipName . -force -part $partNumber
 set_property board_part $boardName [current_project]
 
-create_ip -name smartconnect -vendor xilinx.com -library ip -module_name $ipName
-set_property -dict [list CONFIG.NUM_SI {1} \
-    CONFIG.NUM_MI {1}
-] [get_ips $ipName]
+create_ip -name axi_interconnect -vendor xilinx.com -library ip -version 1.7 -module_name $ipName
 
 generate_target {instantiation_template} [get_files ./$ipName.srcs/sources_1/ip/$ipName/$ipName.xci]
 generate_target all [get_files  ./$ipName.srcs/sources_1/ip/$ipName/$ipName.xci]

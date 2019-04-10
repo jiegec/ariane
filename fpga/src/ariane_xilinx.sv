@@ -675,6 +675,9 @@ fan_ctrl i_fan_ctrl (
     .fan_pwm_o     ( fan_pwm    )
 );
 
+xlnx_smartconnect smc (
+);
+
 xlnx_processing_system7 i_ps7 (
     .DDR_Addr(DDR_addr),
     .DDR_BankAddr(DDR_ba),
