@@ -6,7 +6,7 @@ set ipName xlnx_axi_smartconnect
 create_project $ipName . -force -part $partNumber
 set_property board_part $boardName [current_project]
 
-create_ip -name axi_smartconnect -vendor xilinx.com -library ip -module_name $ipName
+create_ip -name smartconnect -vendor xilinx.com -library ip -module_name $ipName
 set_property -dict [list CONFIG.NUM_SI {1} \
     CONFIG.NUM_MI {1}
 ] [get_ips $ipName]
