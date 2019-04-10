@@ -720,9 +720,7 @@ xlnx_axi_interconnect smc (
     .INTERCONNECT_ACLK(ddr_clock_out),
     .INTERCONNECT_ARESETN(ddr_sync_reset),
     .S00_AXI_ACLK(ddr_clock_out),
-    .S00_AXI_ARESET_OUT_N(ddr_sync_reset),
     .M00_AXI_ACLK(ddr_clock_out),
-    .M00_AXI_ARESET_OUT_N(ddr_sync_reset),
 
     .S00_AXI_AWID(s_axi_awid),
     .S00_AXI_AWADDR(s_axi_awaddr),
