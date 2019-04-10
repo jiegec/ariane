@@ -99,14 +99,13 @@ logic debug_req_irq;
 logic time_irq;
 logic ipi;
 
-logic clk;
-logic eth_clk;
-logic spi_clk_i;
-logic phy_tx_clk;
-logic sd_clk_sys;
+logic clk; // 50MHz
+logic eth_clk; // 125MHz, 90 degree phase shift
+logic phy_tx_clk; // 125MHz
+logic sd_clk_sys; // 50MHz
 
 logic ddr_sync_reset;
-logic ddr_clock_out;
+logic ddr_clock_out; // 200MHz
 
 logic rst_n, rst;
 logic rtc;
@@ -666,7 +665,7 @@ xlnx_clk_gen i_xlnx_clk_gen (
   .clk_out4 ( sd_clk_sys    ), // 50 MHz clock
   .reset    ( cpu_reset     ),
   .locked   ( pll_locked    ),
-  .clk_in1  ( ddr_clock_out )
+  .clk_in1  ( ddr_clock_out ) // 200MHz
 );
 
 fan_ctrl i_fan_ctrl (
@@ -698,7 +697,46 @@ xlnx_processing_system7 i_ps7 (
     .PS_CLK(FIXED_IO_ps_clk),
     .PS_PORB(FIXED_IO_ps_porb),
     .PS_SRSTB(FIXED_IO_ps_srstb),
-    .FCLK_CLK0(ddr_clock_out)
+    .FCLK_CLK0(ddr_clock_out),
+    .FCLK_RESET0_N(ddr_sync_reset),
+
+    .S_AXI_HP0_AWID(s_axi_awid),
+    .S_AXI_HP0_AWADDR(s_axi_awaddr),
+    .S_AXI_HP0_AWLEN(s_axi_awlen),
+    .S_AXI_HP0_AWSIZE(s_axi_awsize),
+    .S_AXI_HP0_AWBURST(s_axi_awburst),
+    .S_AXI_HP0_AWLOCK(s_axi_awlock),
+    .S_AXI_HP0_AWCACHE(s_axi_awcache),
+    .S_AXI_HP0_AWPROT(s_axi_awprot),
+    .S_AXI_HP0_AWQOS(s_axi_awqos),
+    .S_AXI_HP0_AWVALID(s_axi_awvalid),
+    .S_AXI_HP0_AWREADY(s_axi_awready),
+    .S_AXI_HP0_WDATA(s_axi_wdata),
+    .S_AXI_HP0_WSTRB(s_axi_wstrb),
+    .S_AXI_HP0_WLAST(s_axi_wlast),
+    .S_AXI_HP0_WVALID(s_axi_wvalid),
+    .S_AXI_HP0_WREADY(s_axi_wready),
+    .S_AXI_HP0_BREADY(s_axi_bready),
+    .S_AXI_HP0_BID(s_axi_bid),
+    .S_AXI_HP0_BRESP(s_axi_bresp),
+    .S_AXI_HP0_BVALID(s_axi_bvalid),
+    .S_AXI_HP0_ARID(s_axi_arid),
+    .S_AXI_HP0_ARADDR(s_axi_araddr[29:0]),
+    .S_AXI_HP0_ARLEN(s_axi_arlen),
+    .S_AXI_HP0_ARSIZE(s_axi_arsize),
+    .S_AXI_HP0_ARBURST(s_axi_arburst),
+    .S_AXI_HP0_ARLOCK(s_axi_arlock),
+    .S_AXI_HP0_ARCACHE(s_axi_arcache),
+    .S_AXI_HP0_ARPROT(s_axi_arprot),
+    .S_AXI_HP0_ARQOS(s_axi_arqos),
+    .S_AXI_HP0_ARVALID(s_axi_arvalid),
+    .S_AXI_HP0_ARREADY(s_axi_arready),
+    .S_AXI_HP0_READY(s_axi_rready),
+    .S_AXI_HP0_RID(s_axi_rid),
+    .S_AXI_HP0_RDATA(s_axi_rdata),
+    .S_AXI_HP0_RRESP(s_axi_rresp),
+    .S_AXI_HP0_RLAST(s_axi_rlast),
+    .S_AXI_HP0_RVALID(s_axi_rvalid)
 );
 
 // xlnx_mig_7_ddr3 i_ddr (
