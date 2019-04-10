@@ -731,7 +731,7 @@ xlnx_processing_system7 i_ps7 (
     .S_AXI_HP0_ARQOS(s_axi_arqos),
     .S_AXI_HP0_ARVALID(s_axi_arvalid),
     .S_AXI_HP0_ARREADY(s_axi_arready),
-    .S_AXI_HP0_READY(s_axi_rready),
+    .S_AXI_HP0_RREADY(s_axi_rready),
     .S_AXI_HP0_RID(s_axi_rid),
     .S_AXI_HP0_RDATA(s_axi_rdata),
     .S_AXI_HP0_RRESP(s_axi_rresp),
